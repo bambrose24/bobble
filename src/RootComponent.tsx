@@ -1,11 +1,12 @@
 import { Paper, Container, Typography, Button, AppBar, Toolbar, Grid } from '@mui/material'
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import './root.css'
 import { GameBoard } from './GameBoard'
 import { addLetter, createGame, currentGame, done, makeGuess, removeLetter } from './gameReducer'
 import { useAppDispatch, useAppSelector } from './hooks'
+import { StatsDialog } from './StatsDialog';
 
 export const RootComponent: React.FC = () => {
     const userState = useAppSelector(state => state.game)
@@ -17,6 +18,8 @@ export const RootComponent: React.FC = () => {
     if (!userState.games || userState.games.length === 0) {
         dispatch(createGame())
     }
+
+    const [showStats, setShowStats] = useState<boolean>(false)
 
     const allKeys = "abcdefghijklmnopqrstuvwxyz".split('').concat(['{bksp} {enter}'])
 
@@ -44,10 +47,8 @@ export const RootComponent: React.FC = () => {
     const invalidLettersForKeyboard = allKeys.filter(k => !perfectLetters.has(k) && !closeLetters.has(k) && allUsedLetters.has(k))
     const unusedLetters = allKeys.filter(k => !allUsedLetters.has(k))
 
-
-
     return (
-        <Container maxWidth="md" sx={{
+        <Container maxWidth="sm" sx={{
             marginTop: "20px",
             marginBottom: "20px",
         }}>
@@ -58,6 +59,7 @@ export const RootComponent: React.FC = () => {
                             <Button
                                 variant="outlined"
                                 size="large"
+                                onClick={() => setShowStats(true)}
                                 color="inherit"
                                 sx={{
                                     width: "100%",
@@ -92,6 +94,7 @@ export const RootComponent: React.FC = () => {
                     </Grid>
                 </Toolbar>
             </AppBar>
+            <StatsDialog setShowStats={setShowStats} showStats={showStats} userState={userState} />
             <Paper elevation={2}>
                 <GameBoard userState={userState} />
                 <div style={{

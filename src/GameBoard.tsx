@@ -8,7 +8,7 @@ type IProps = {
     userState: UserState,
 }
 
-const Transition = React.forwardRef(function Transition(
+export const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
     },
@@ -160,17 +160,18 @@ export const GameBoard: React.FC<IProps> = (props) => {
                             justifyContent: "center",
                         }}>
                             <Paper elevation={8} sx={{
-                                width: "min(14vw, 100px)",
-                                height: "min(14vw, 100px)",
+                                width: "min(14vw, 85px)",
+                                height: "min(14vw, 85px)",
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
                                 backgroundColor: isCurrentGuess && currGame.isCurrentGuessInvalid ? theme.palette.error.main : canShowBackgroundColor ? backgroundColorsMap.get(backgroundColorMapKey) : undefined,
                             }}>
                                 <Typography variant="h3" sx={{
-                                    fontSize: "calc(min(14vw, 100px) * 0.7)",
+                                    fontSize: "calc(min(14vw, 85px) * 0.6)",
                                     flex: "0 0",
                                     padding: "10px",
+                                    fontWeight: "bold",
                                 }}>
                                     {guess ? guess[guessLetterKey]?.toLocaleUpperCase() : undefined}
                                 </Typography>
