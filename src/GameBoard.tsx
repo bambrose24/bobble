@@ -90,7 +90,6 @@ export const GameBoard: React.FC<IProps> = (props) => {
                 }
                 const guessedLetter = guess[letterKey]
                 const mapKey = guessKey + "," + letterKey
-                console.log(guessedLetter, remainingLetters)
                 if (remainingLetters.has(guessedLetter)) {
                     backgroundColorsMap.set(mapKey, theme.palette.warning.main)
                     const remaining = (remainingLetters.get(guessedLetter) ?? 0) - 1
