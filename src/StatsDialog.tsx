@@ -40,7 +40,6 @@ export const StatsDialog: React.FC<IProps> = (props) => {
     if (props.showStats) {
         ReactGA.event('stats_shown')
     }
-    console.log(winningCountsMap)
 
     return <>
         <Dialog
