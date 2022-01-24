@@ -82,7 +82,7 @@ export const RootComponent: React.FC = () => {
                                 size="large"
                                 color="inherit"
                                 onClick={() => dispatch(createGame())}
-                                disabled={!currGame || !done(currGame)}
+                                disabled={!currGame || !done(currGame) || userState.animationData.shouldAnimateLastGuess}
                                 sx={{
                                     width: "100%",
                                     height: "100%",

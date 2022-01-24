@@ -34,7 +34,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
         if (userState.animationData.shouldAnimateLastGuess) {
             const interval = setInterval(() => {
                 setMinIndexToColor(x => {
-                    if (x > 6) {
+                    if (x > 4) {
                         dispatch(setAnimatedLastGuess())
                         clearInterval(interval)
                         return 0
@@ -129,7 +129,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
     console.log('haha you cheated and found the answer...', answer)
     return <>
         <Dialog
-            open={gameDone && modalOpen && !seenModal}
+            open={gameDone && modalOpen && !seenModal && !userState.animationData.shouldAnimateLastGuess}
             onClose={() => {
                 setSeenModal(true)
                 setModalOpen(false)
