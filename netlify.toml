@@ -3,5 +3,3 @@
   to = "https://bobble.fun/"
   status = 301
   force = true
-  query = {path = ":path"}
-  conditions = {Language = ["en"], Country = ["US"], Role = ["admin"]}
