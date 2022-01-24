@@ -2,6 +2,6 @@
   from = "https://unruffled-wing-c7f459.netlify.app/"
   to = "https://bobble.fun/"
   status = 301
-  force = false
+  force = true
   query = {path = ":path"}
   conditions = {Language = ["en"], Country = ["US"], Role = ["admin"]}
