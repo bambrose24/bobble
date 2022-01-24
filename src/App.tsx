@@ -6,6 +6,9 @@ import './App.css';
 import { RootComponent } from './RootComponent';
 import { store, persistor } from './store';
 
+import ReactGA from 'react-ga4'
+ReactGA.initialize('G-S1JHBBM9T9')
+
 
 function App() {
 

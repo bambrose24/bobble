@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { WritableDraft } from 'immer/dist/types/types-external'
 import { text } from './words'
+import ReactGA from 'react-ga4'
 
 const words = new Set(text.split("\n"))
 
@@ -98,6 +99,7 @@ export const gameSlice = createSlice({
     initialState,
     reducers: {
         createGame: (state: WritableDraft<UserState>) => {
+            ReactGA.event('game_created')
             if (!state.games) {
                 state.games = []
             }
@@ -112,6 +114,7 @@ export const gameSlice = createSlice({
             })
         },
         makeGuess: (state: WritableDraft<UserState>) => {
+            ReactGA.event('guess_made')
             const currGame = currentGame(state)
             const currGuess = currGame?.currentGuess
             if (!currGame || !currGuess) {
