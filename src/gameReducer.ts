@@ -156,7 +156,13 @@ export const gameSlice = createSlice({
             }
 
             if (done(newGame)) {
-                ReactGA.event(didWin(newGame) ? 'game_won' : 'game_lost')
+                if (didWin(newGame)) {
+                    ReactGA.event('game_won_general')
+                    const guessCount = newGame.previousGuesses.length
+                    ReactGA.event('game_won_in_' + guessCount.toString())
+                } else {
+                    ReactGA.event('game_lost_general')
+                }   
             }
 
             state.games.pop()
