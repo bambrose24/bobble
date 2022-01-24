@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, StateFromReducersMapObject } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { WritableDraft } from 'immer/dist/types/types-external'
 import { text } from './words'
 import { scrabble } from './scrabbleFives'
