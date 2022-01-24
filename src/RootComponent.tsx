@@ -141,7 +141,11 @@ export const RootComponent: React.FC = () => {
                             },
                             {
                                 class: "hg-all hg-default",
-                                buttons: [...unusedLetters].join(' ')
+                                buttons: [...unusedLetters].filter(l => l !== '{bksp}').join(' ')
+                            },
+                            {
+                                class: "hg-all hg-backspace",
+                                buttons: '{bksp}',
                             }
                         ]}
                     />

@@ -2,6 +2,10 @@
     font-weight: bold;
 }
 
+.simple-keyboard.hg-layout-default .hg-button.hg-backspace {
+  font-size: 30px;
+}
+
 .simple-keyboard.hg-layout-default .hg-button.hg-perfect {
     background: #388e3c;
     color: white;
