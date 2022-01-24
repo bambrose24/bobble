@@ -53,7 +53,12 @@ export const currentGame = (userState: UserState): Game | null => {
 }
 
 const initialState: UserState = {
-    games: [],
+    games: [{
+        answer: text.split("\n")[Math.floor(Math.random() * words.size)],
+        currentGuess: '',
+        isCurrentGuessInvalid: false,
+        previousGuesses: []
+    }],
     preferences: {
         paletteMode: "dark"
     },
