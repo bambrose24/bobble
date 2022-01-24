@@ -38,14 +38,15 @@ export const GameBoard: React.FC<IProps> = (props) => {
     const backgroundColorsMap = new Map<string, string>();
     if (answer) {
         [...Array(6).keys()].forEach(guessKey => {
-            const guess = (currGame?.previousGuesses).at(guessKey)
+            const prevGuesses = currGame.previousGuesses
+            const guess = guessKey < prevGuesses.length ? prevGuesses[guessKey] : null
             if (!guess) {
                 return
             }
             const solvedIndexes = new Set<number>();
             [...Array(5).keys()].forEach(letterKey => {
-                const correctLetter = answer?.at(letterKey)
-                const guessedLetter = guess.at(letterKey)
+                const correctLetter = answer[letterKey]
+                const guessedLetter = guess[letterKey]
                 if (!guessedLetter) {
                     return
                 }
@@ -61,14 +62,14 @@ export const GameBoard: React.FC<IProps> = (props) => {
                 if (solvedIndexes.has(i)) {
                     continue
                 }
-                remainingLetters.add(answer.at(i) as string)
+                remainingLetters.add(answer[i] as string)
             }
 
             [...Array(5).keys()].forEach(letterKey => {
                 if (solvedIndexes.has(letterKey)) {
                     return
                 }
-                const guessedLetter = guess.at(letterKey)
+                const guessedLetter = guess[letterKey]
                 if (!guessedLetter) {
                     return
                 }
@@ -94,6 +95,10 @@ export const GameBoard: React.FC<IProps> = (props) => {
         })
     }, [dispatch])
 
+    if (!currGame) {
+        return null
+    }
+
     const showAnswer = currGame && done(currGame) && !didWin(currGame)
 
     return <>
@@ -117,13 +122,13 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     textAlign: "center",
                     color: theme.palette.getContrastText(theme.palette.grey[200])
                 }}>
-                    {showAnswer ? currGame?.answer.toLocaleUpperCase() : ''}
+                    {showAnswer ? currGame.answer.toLocaleUpperCase() : ''}
                 </Typography>
             </Paper>
         </div>
         {[...Array(6).keys()].map(guessKey => {
             const isCurrentGuess = currGuessIndex === guessKey
-            const guess = isCurrentGuess ? currGuess : currGame?.previousGuesses.at(guessKey)
+            const guess = isCurrentGuess ? currGuess : guessKey < currGame.previousGuesses.length ? currGame.previousGuesses[guessKey] : null
             return <Grid container sx={{ margin: "10px" }} key={`row_container_${guessKey}`}>
                 <Grid item key={`row1_${guessKey}`} xs={1} />
                 {[...Array(5).keys()].map(guessLetterKey => {
@@ -143,7 +148,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                backgroundColor: isCurrentGuess && currGame?.isCurrentGuessInvalid ? theme.palette.error.main : canShowBackgroundColor ? backgroundColorsMap.get(backgroundColorMapKey) : undefined,
+                                backgroundColor: isCurrentGuess && currGame.isCurrentGuessInvalid ? theme.palette.error.main : canShowBackgroundColor ? backgroundColorsMap.get(backgroundColorMapKey) : undefined,
                             }}>
                                 <Typography variant="h3" sx={{
                                     fontSize: "calc(min(12vw, 100px) * 0.7)",
