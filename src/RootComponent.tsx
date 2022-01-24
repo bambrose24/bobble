@@ -76,7 +76,7 @@ export const RootComponent: React.FC = () => {
                 <div style={{
                     position: "fixed",
                     height: "auto",
-                    width: "min(100%, 852px)",
+                    width: "min(90%, 852px)",
                     bottom: 0,
                 }}>
                     <Keyboard
