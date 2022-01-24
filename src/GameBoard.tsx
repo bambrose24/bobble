@@ -129,7 +129,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
         {[...Array(6).keys()].map(guessKey => {
             const isCurrentGuess = currGuessIndex === guessKey
             const guess = isCurrentGuess ? currGuess : guessKey < currGame.previousGuesses.length ? currGame.previousGuesses[guessKey] : null
-            return <Grid container sx={{ margin: "10px" }} key={`row_container_${guessKey}`}>
+            return <Grid container key={`row_container_${guessKey}`}>
                 <Grid item key={`row1_${guessKey}`} xs={1} />
                 {[...Array(5).keys()].map(guessLetterKey => {
                     const backgroundColorMapKey = guessKey + "," + guessLetterKey
@@ -143,15 +143,15 @@ export const GameBoard: React.FC<IProps> = (props) => {
                             justifyContent: "center",
                         }}>
                             <Paper elevation={8} sx={{
-                                width: "min(12vw, 100px)",
-                                height: "min(12vw, 100px)",
+                                width: "min(11vw, 100px)",
+                                height: "min(11vw, 100px)",
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
                                 backgroundColor: isCurrentGuess && currGame.isCurrentGuessInvalid ? theme.palette.error.main : canShowBackgroundColor ? backgroundColorsMap.get(backgroundColorMapKey) : undefined,
                             }}>
                                 <Typography variant="h3" sx={{
-                                    fontSize: "calc(min(12vw, 100px) * 0.7)",
+                                    fontSize: "calc(min(11vw, 100px) * 0.7)",
                                     flex: "0 0",
                                     padding: "10px",
                                 }}>
