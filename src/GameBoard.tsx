@@ -165,8 +165,8 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     const canShowBackgroundColor = (guessKey === prevGuessIndex && shouldAnimate && minIndexToColor >= guessLetterKey) || (shouldAnimate && guessKey < prevGuessIndex) || (!shouldAnimate && guess)
                     return <>
                         <Grid item key={`row_col_${guessKey}_${guessLetterKey}`} xs={2} sx={{
-                            marginTop: "10px",
-                            marginBottom: "10px",
+                            marginTop: "6px",
+                            marginBottom: "6px",
                             display: "flex",
                             justifyContent: "center",
                         }}>
