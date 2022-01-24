@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { WritableDraft } from 'immer/dist/types/types-external'
 import { text } from './words'
 import ReactGA from 'react-ga4'
+import React from 'react'
 
 const words = new Set(text.split("\n"))
 
@@ -127,6 +128,9 @@ export const gameSlice = createSlice({
                     isCurrentGuessInvalid: true,
                     currentGuess: currGuess,
                     previousGuesses: currGame.previousGuesses,
+                }
+                if (done(newGame)) {
+                    ReactGA.event(didWin(newGame) ? 'game_won' : 'game_lost')
                 }
                 state.games.push(newGame)
                 return state
