@@ -153,6 +153,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     color="inherit"
                     onClick={() => {
                         setModalOpen(false)
+                        setSeenModal(true)
                         new Promise((resolve) => setTimeout(resolve, 300)).then(() => dispatch(createGame()))
                     }}
                     sx={{
