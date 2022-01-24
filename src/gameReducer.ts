@@ -1,9 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, StateFromReducersMapObject } from '@reduxjs/toolkit'
 import { WritableDraft } from 'immer/dist/types/types-external'
 import { text } from './words'
+import { scrabble } from './scrabbleFives'
 import ReactGA from 'react-ga4'
 
-const words = new Set(text.split("\n"))
+const answerWords = text.split("\n")
+const answerWordsSet = new Set(answerWords)
+const scrabbleWords = new Set(scrabble.split("\n"))
 
 export type Guess = {
     word: string
@@ -28,7 +31,7 @@ export const didWin = (game: Game): boolean => {
 }
 
 export const canMakeGuess = (game: Game, guess: string): boolean => {
-    return !game.previousGuesses.includes(guess) && words.has(guess)
+    return !game.previousGuesses.includes(guess) && (scrabbleWords.has(guess) || answerWordsSet.has(guess))
 }
 
 export type Preferences = {
@@ -55,7 +58,7 @@ export const currentGame = (userState: UserState): Game | null => {
 
 const initialState: UserState = {
     games: [{
-        answer: text.split("\n")[Math.floor(Math.random() * words.size)],
+        answer: answerWords[Math.floor(Math.random() * answerWords.length)],
         currentGuess: '',
         isCurrentGuessInvalid: false,
         previousGuesses: [],
@@ -104,7 +107,14 @@ export const gameSlice = createSlice({
                 state.games = []
             }
             const answers = text.split("\n")
-            const answerIndex = Math.floor(Math.random() * answers.length)
+            const prevAnswers = new Set<string>();
+            state.games.forEach(g => {
+                prevAnswers.add(g.answer)
+            })
+            let answerIndex = Math.floor(Math.random() * answers.length)
+            while (prevAnswers.has(answers[answerIndex])) {
+                answerIndex = Math.floor(Math.random() * answers.length)
+            }
 
             state.games.push({
                 answer: answers[answerIndex],

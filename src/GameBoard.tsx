@@ -1,7 +1,7 @@
-import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Slide, Typography, useTheme } from "@mui/material"
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Slide, Typography, useTheme } from "@mui/material"
 import { TransitionProps } from '@mui/material/transitions'
 import React, { useEffect, useState } from "react"
-import { UserState, makeGuess, currentGame, addLetter, removeLetter, setAnimatedLastGuess, done, didWin } from "./gameReducer"
+import { UserState, makeGuess, currentGame, addLetter, removeLetter, setAnimatedLastGuess, done, didWin, createGame } from "./gameReducer"
 import { useAppDispatch } from "./hooks"
 
 type IProps = {
@@ -119,8 +119,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
     }
 
     const won = done(currGame) && didWin(currGame)
-    console.log('won and gameDone', won, gameDone, modalOpen)
-    console.log('answer', answer)
+    console.log('haha you cheated and found the answer...', answer)
     return <>
         <Dialog
             open={gameDone && modalOpen && !seenModal}
@@ -141,6 +140,18 @@ export const GameBoard: React.FC<IProps> = (props) => {
                         <div>The answer was <b>{currGame.answer}</b>. Try again!</div>
                     }
                 </DialogContentText>
+                <Button
+                    size="large"
+                    variant="outlined"
+                    color="inherit"
+                    onClick={() => {
+                        setModalOpen(false)
+                        new Promise((resolve) => setTimeout(resolve, 300)).then(() => dispatch(createGame()))
+                    }}
+                    sx={{
+                        marginTop: "10px",
+                        width: "100%",
+                    }}>New Game</Button>
             </DialogContent>
         </Dialog>
         {[...Array(6).keys()].map(guessKey => {
