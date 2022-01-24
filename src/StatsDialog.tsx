@@ -76,7 +76,7 @@ export const StatsDialog: React.FC<IProps> = (props) => {
                                 textAlign: "center",
                                 fontWeight: "bold",
                             }}>
-                                {Math.round((winningGames.length / doneGames.length) * 100)}%
+                                {winningGames.length === 0 ? 0 : Math.round((winningGames.length / doneGames.length) * 100)}%
                             </Typography>
                         </Grid>
                         <Grid item xs={3}>
