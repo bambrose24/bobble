@@ -1,4 +1,5 @@
-import { Grid, Paper, Typography, useTheme } from "@mui/material"
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, Modal, Paper, Slide, Typography, useTheme } from "@mui/material"
+import { TransitionProps } from '@mui/material/transitions'
 import React, { useEffect, useState } from "react"
 import { UserState, makeGuess, currentGame, addLetter, removeLetter, setAnimatedLastGuess, done, didWin } from "./gameReducer"
 import { useAppDispatch } from "./hooks"
@@ -6,6 +7,15 @@ import { useAppDispatch } from "./hooks"
 type IProps = {
     userState: UserState,
 }
+
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export const GameBoard: React.FC<IProps> = (props) => {
     const theme = useTheme()
@@ -15,6 +25,8 @@ export const GameBoard: React.FC<IProps> = (props) => {
     const prevGuessIndex = currGuessIndex - 1
     const currGuess = currGame?.currentGuess
     const dispatch = useAppDispatch()
+    const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [seenModal, setSeenModal] = useState<boolean>(false)
 
     const [minIndexToColor, setMinIndexToColor] = useState<number>(0)
 
@@ -32,6 +44,8 @@ export const GameBoard: React.FC<IProps> = (props) => {
             }, 400)
         }
     }, [userState.animationData.shouldAnimateLastGuess, dispatch])
+
+    useEffect(() => setSeenModal(false), [currGame])
 
     const answer = currGame?.answer
 
@@ -99,33 +113,36 @@ export const GameBoard: React.FC<IProps> = (props) => {
         return null
     }
 
-    const showAnswer = currGame && done(currGame) && !didWin(currGame)
+    const gameDone = done(currGame)
+    if (gameDone && !modalOpen) {
+        setModalOpen(true)
+    }
 
+    const won = done(currGame) && didWin(currGame)
+    console.log('won and gameDone', won, gameDone, modalOpen)
+    console.log('answer', answer)
     return <>
-        <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-            <Paper
-                elevation={3}
-                sx={{
-                    backgroundColor: theme.palette.grey[200],
-                    margin: "20px",
-                    height: "calc(min(12vw, 100px) * 0.8)",
-                    opacity: showAnswer ? undefined : 0,
-                }}
-            >
-                <Typography variant="h5" sx={{
-                    fontSize: "calc(min(12vw, 100px) * 0.5)",
-                    padding: "5px",
-                    textAlign: "center",
-                    color: theme.palette.getContrastText(theme.palette.grey[200])
-                }}>
-                    {showAnswer ? currGame.answer.toLocaleUpperCase() : ''}
-                </Typography>
-            </Paper>
-        </div>
+        <Dialog
+            open={gameDone && modalOpen && !seenModal}
+            onClose={() => {
+                setSeenModal(true)
+                setModalOpen(false)
+            }}
+            TransitionComponent={Transition}
+        >
+            <DialogTitle>
+                {won ? "You won!" : "Oh no :("}
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    {won ?
+                        <div>You correctly guessed <b>{currGame.answer}</b> in <b>{currGame.previousGuesses.length}</b> attempts</div>
+                        :
+                        <div>The answer was <b>{currGame.answer}</b>. Try again!</div>
+                    }
+                </DialogContentText>
+            </DialogContent>
+        </Dialog>
         {[...Array(6).keys()].map(guessKey => {
             const isCurrentGuess = currGuessIndex === guessKey
             const guess = isCurrentGuess ? currGuess : guessKey < currGame.previousGuesses.length ? currGame.previousGuesses[guessKey] : null
@@ -151,7 +168,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
                                 backgroundColor: isCurrentGuess && currGame.isCurrentGuessInvalid ? theme.palette.error.main : canShowBackgroundColor ? backgroundColorsMap.get(backgroundColorMapKey) : undefined,
                             }}>
                                 <Typography variant="h3" sx={{
-                                    fontSize: "calc(min(12vw, 100px) * 0.7)",
+                                    fontSize: "calc(min(14vw, 100px) * 0.7)",
                                     flex: "0 0",
                                     padding: "10px",
                                 }}>

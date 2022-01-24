@@ -1,4 +1,4 @@
-import { Paper, Container, Typography, Button } from '@mui/material'
+import { Paper, Container, Typography, Button, AppBar, Toolbar, Grid } from '@mui/material'
 import { useRef } from 'react';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
@@ -51,34 +51,54 @@ export const RootComponent: React.FC = () => {
             marginTop: "20px",
             marginBottom: "20px",
         }}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Grid container>
+                        <Grid item xs={3}>
+                            <Button
+                                variant="outlined"
+                                size="large"
+                                color="inherit"
+                                sx={{
+                                    width: "100%",
+                                    height: "100%",
+                                }}
+                            >Stats</Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="h4" component="div" sx={{
+                                flexGrow: 1,
+                                textAlign: "center",
+                                fontWeight: "bold",
+                            }}>
+                                Bobble
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button
+                                variant="outlined"
+                                size="large"
+                                color="inherit"
+                                onClick={() => dispatch(createGame())}
+                                disabled={!currGame || !done(currGame)}
+                                sx={{
+                                    width: "100%",
+                                    height: "100%",
+                                }}
+                            >
+                                New
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Toolbar>
+            </AppBar>
             <Paper elevation={2}>
-                <Typography variant="h3" sx={{
-                    textAlign: "center",
-                    padding: "20px",
-                }}>Bobble</Typography>
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}>
-                    <Button variant="contained"
-                        disabled={!currGame || !done(currGame)}
-                        onClick={() => dispatch(createGame())}
-                        sx={{
-                            margin: "0 auto",
-                            width: "200px",
-                            textAlign: "center",
-                        }}>
-                        New Game
-                    </Button>
-                </div>
                 <GameBoard userState={userState} />
                 <div style={{
-                    position: "fixed",
                     height: "auto",
-                    width: "min(90%, 907px)",
+                    marginTop: "10px",
+                    width: "min(100%, 907px)",
                     marginBottom: "15px",
-                    bottom: 0,
                 }}>
                     <Keyboard
                         keyboardRef={r => (keyboard.current = r)}
@@ -123,7 +143,6 @@ export const RootComponent: React.FC = () => {
                         ]}
                     />
                 </div>
-                <div style={{ height: "150px" }} />
             </Paper>
         </Container>
     )
