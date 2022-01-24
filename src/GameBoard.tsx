@@ -38,7 +38,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
     const backgroundColorsMap = new Map<string, string>();
     if (answer) {
         [...Array(6).keys()].forEach(guessKey => {
-            const guess = currGame?.previousGuesses?.at(guessKey)
+            const guess = (currGame?.previousGuesses ?? []).at(guessKey)
             if (!guess) {
                 return
             }
