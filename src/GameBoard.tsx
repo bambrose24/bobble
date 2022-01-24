@@ -71,12 +71,17 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     backgroundColorsMap.set(mapKey, theme.palette.success.dark)
                 }
             });
-            const remainingLetters = new Set<string>();
+            const remainingLetters = new Map<string, number>();
             for (let i = 0; i < 5; i++) {
                 if (solvedIndexes.has(i)) {
                     continue
                 }
-                remainingLetters.add(answer[i] as string)
+                const c = answer[i]
+                if (!remainingLetters.has(c)) {
+                    remainingLetters.set(c, 0)
+                }
+                const letterCount = remainingLetters.get(c) as number
+                remainingLetters.set(c, letterCount + 1)
             }
 
             [...Array(5).keys()].forEach(letterKey => {
@@ -84,12 +89,15 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     return
                 }
                 const guessedLetter = guess[letterKey]
-                if (!guessedLetter) {
-                    return
-                }
                 const mapKey = guessKey + "," + letterKey
+                console.log(guessedLetter, remainingLetters)
                 if (remainingLetters.has(guessedLetter)) {
                     backgroundColorsMap.set(mapKey, theme.palette.warning.main)
+                    const remaining = (remainingLetters.get(guessedLetter) ?? 0) - 1
+                    if (remaining <= 0) {
+                        remainingLetters.delete(guessedLetter)
+                    }
+                    remainingLetters.set(guessedLetter, remaining)
                 } else {
                     backgroundColorsMap.set(mapKey, theme.palette.grey[600])
                 }
