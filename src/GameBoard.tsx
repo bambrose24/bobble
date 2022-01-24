@@ -142,9 +142,9 @@ export const GameBoard: React.FC<IProps> = (props) => {
             <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                     {won ?
-                        <div>You correctly guessed <b>{currGame.answer}</b> in <b>{currGame.previousGuesses.length}</b> attempts</div>
+                        <div>You correctly guessed <b>{currGame.answer.toLocaleUpperCase()}</b> in <b>{currGame.previousGuesses.length}</b> attempts</div>
                         :
-                        <div>The answer was <b>{currGame.answer}</b>. Try again!</div>
+                        <div>The answer was <b>{currGame.answer.toLocaleUpperCase()}</b>. Try again!</div>
                     }
                 </DialogContentText>
                 <Button
