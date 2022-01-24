@@ -4,9 +4,9 @@ import { text } from './words'
 import { scrabble } from './scrabbleFives'
 import ReactGA from 'react-ga4'
 
-const answerWords = text.split("\n")
+const answerWords = text.split("\n").filter(w => w !== 'goose' && w !== 'ziggy')
 const answerWordsSet = new Set(answerWords)
-const scrabbleWords = new Set(scrabble.split("\n"))
+const scrabbleWords = new Set(scrabble.split("\n").filter(w => w !== 'goose' && w !== 'ziggy'))
 
 export type Guess = {
     word: string
@@ -132,14 +132,17 @@ export const gameSlice = createSlice({
             }
             if (!canMakeGuess(currGame, currGuess) || currGuess.length !== 5) {
                 state.games.pop()
+                let alteredCurrGuess = currGuess
+                if (alteredCurrGuess === 'ziggy') {
+                    alteredCurrGuess = 'goose'
+                } else if (alteredCurrGuess === 'goose') {
+                    alteredCurrGuess = 'ziggy'
+                }
                 const newGame = {
                     answer: currGame.answer,
                     isCurrentGuessInvalid: true,
-                    currentGuess: currGuess,
+                    currentGuess: alteredCurrGuess,
                     previousGuesses: currGame.previousGuesses,
-                }
-                if (done(newGame)) {
-                    ReactGA.event(didWin(newGame) ? 'game_won' : 'game_lost')
                 }
                 state.games.push(newGame)
                 return state
@@ -150,6 +153,10 @@ export const gameSlice = createSlice({
                 isCurrentGuessInvalid: false,
                 currentGuess: '',
                 previousGuesses: currGame.previousGuesses.concat([currGuess]),
+            }
+
+            if (done(newGame)) {
+                ReactGA.event(didWin(newGame) ? 'game_won' : 'game_lost')
             }
 
             state.games.pop()
