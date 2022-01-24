@@ -57,7 +57,7 @@ const initialState: UserState = {
         answer: text.split("\n")[Math.floor(Math.random() * words.size)],
         currentGuess: '',
         isCurrentGuessInvalid: false,
-        previousGuesses: new Array(),
+        previousGuesses: [],
     }],
     preferences: {
         paletteMode: "dark"
@@ -99,7 +99,7 @@ export const gameSlice = createSlice({
     reducers: {
         createGame: (state: WritableDraft<UserState>) => {
             if (!state.games) {
-                state.games = new Array()
+                state.games = []
             }
             const answers = text.split("\n")
             const answerIndex = Math.floor(Math.random() * answers.length)
