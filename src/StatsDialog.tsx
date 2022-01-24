@@ -1,9 +1,8 @@
-import { Dialog, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Typography } from "@mui/material"
+import { Dialog, DialogContent, DialogTitle, Divider, Grid, Typography } from "@mui/material"
 import { Transition } from "./GameBoard"
 import { didWin, done, UserState } from "./gameReducer"
 
 import ReactGA from 'react-ga4'
-import internal from "stream"
 
 type IProps = {
     setShowStats: ((v: boolean) => void),

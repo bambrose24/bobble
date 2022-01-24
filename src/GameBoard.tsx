@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, Modal, Paper, Slide, Typography, useTheme } from "@mui/material"
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Slide, Typography, useTheme } from "@mui/material"
 import { TransitionProps } from '@mui/material/transitions'
 import React, { useEffect, useState } from "react"
 import { UserState, makeGuess, currentGame, addLetter, removeLetter, setAnimatedLastGuess, done, didWin } from "./gameReducer"
