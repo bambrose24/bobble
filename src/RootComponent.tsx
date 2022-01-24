@@ -123,7 +123,7 @@ export const RootComponent: React.FC = () => {
                         ]}
                     />
                 </div>
-                <div style={{ height: "250px" }} />
+                <div style={{ height: "150px" }} />
             </Paper>
         </Container>
     )
