@@ -40,11 +40,11 @@ export const RootComponent: React.FC = () => {
     })
 
     const perfectLettersForKeyboard = allKeys.filter(k => perfectLetters.has(k))
-    const closeLettersForKeyboard = allKeys.filter(k => !perfectLetters.has(k) && closeLetters.has(k))    
+    const closeLettersForKeyboard = allKeys.filter(k => !perfectLetters.has(k) && closeLetters.has(k))
     const invalidLettersForKeyboard = allKeys.filter(k => !perfectLetters.has(k) && !closeLetters.has(k) && allUsedLetters.has(k))
     const unusedLetters = allKeys.filter(k => !allUsedLetters.has(k))
 
-    
+
 
     return (
         <Container maxWidth="md" sx={{
@@ -98,21 +98,25 @@ export const RootComponent: React.FC = () => {
                                 "{enter} z x c v b n m {bksp}",
                             ],
                         }}
+                        display={{
+                            '{bksp}': '⌫',
+                            '{enter}': 'enter',
+                        }}
                         buttonTheme={[
                             {
-                                class: "hg-perfect",
+                                class: "hg-all hg-perfect",
                                 buttons: [...perfectLettersForKeyboard].join(' '),
                             },
                             {
-                                class: "hg-close",
+                                class: "hg-all hg-close",
                                 buttons: [...closeLettersForKeyboard].join(' '),
                             },
                             {
-                                class: "hg-invalid",
+                                class: "hg-all hg-invalid",
                                 buttons: [...invalidLettersForKeyboard].join(' '),
                             },
                             {
-                                class: "hg-default",
+                                class: "hg-all hg-default",
                                 buttons: [...unusedLetters].join(' ')
                             }
                         ]}

@@ -143,15 +143,15 @@ export const GameBoard: React.FC<IProps> = (props) => {
                             justifyContent: "center",
                         }}>
                             <Paper elevation={8} sx={{
-                                width: "min(11vw, 100px)",
-                                height: "min(11vw, 100px)",
+                                width: "min(14vw, 100px)",
+                                height: "min(14vw, 100px)",
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
                                 backgroundColor: isCurrentGuess && currGame.isCurrentGuessInvalid ? theme.palette.error.main : canShowBackgroundColor ? backgroundColorsMap.get(backgroundColorMapKey) : undefined,
                             }}>
                                 <Typography variant="h3" sx={{
-                                    fontSize: "calc(min(11vw, 100px) * 0.7)",
+                                    fontSize: "calc(min(12vw, 100px) * 0.7)",
                                     flex: "0 0",
                                     padding: "10px",
                                 }}>
