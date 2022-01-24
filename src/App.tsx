@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useMemo } from 'react'
+import { createTheme, CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
+import { Provider as ReduxProvider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 import './App.css';
+import { RootComponent } from './RootComponent';
+import { store, persistor } from './store';
+
 
 function App() {
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: "dark",
+        },
+      }),
+    [],
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ReduxProvider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <RootComponent />
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </PersistGate>
+    </ReduxProvider>
   );
 }
 

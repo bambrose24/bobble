@@ -1,0 +1,26 @@
+.simple-keyboard.hg-layout-default .hg-button.hg-perfect {
+    background: #388e3c;
+    color: white;
+  }
+
+  .simple-keyboard.hg-layout-default .hg-button.hg-close {
+    background: #ffa726;
+    color: white;
+  }
+
+  .simple-keyboard.hg-layout-default .hg-button.hg-invalid {
+    background: rgb(100, 100, 100);
+    color: white;
+  }
+
+  .simple-keyboard.hg-layout-default .hg-button.hg-default {
+    background: white;
+    color: rgb(100, 100, 100);
+  }
+
+.simple-keyboard.hg-theme-default.myTheme {
+    border: 5px solid rgb(255, 0, 0, 0.7);
+    border-radius: 10px;
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
