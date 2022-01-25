@@ -112,7 +112,6 @@ export const gameSlice = createSlice({
             }
 
             const answer = action.payload && answerWordsSet.has(action.payload) ? action.payload : answers[answerIndex]
-            console.log(action.payload, answerWordsSet.has(action.payload ?? ''), answer)
 
             state.games.push({
                 answer: answer,

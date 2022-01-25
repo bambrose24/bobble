@@ -17,7 +17,6 @@ export const RootComponent: React.FC = () => {
     const userState = useAppSelector(state => state.game)
     const keyboard = useRef()
     const params = useParams<IRouterParams>()
-    console.log(params)
 
     // create game if necessary
     const dispatch = useAppDispatch()
