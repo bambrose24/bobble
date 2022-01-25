@@ -98,8 +98,9 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     const remaining = (remainingLetters.get(guessedLetter) ?? 0) - 1
                     if (remaining <= 0) {
                         remainingLetters.delete(guessedLetter)
+                    } else {
+                        remainingLetters.set(guessedLetter, remaining)
                     }
-                    remainingLetters.set(guessedLetter, remaining)
                 } else {
                     backgroundColorsMap.set(mapKey, theme.palette.grey[600])
                 }
