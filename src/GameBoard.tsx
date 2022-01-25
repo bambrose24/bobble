@@ -1,8 +1,10 @@
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Slide, Typography, useTheme } from "@mui/material"
 import { TransitionProps } from '@mui/material/transitions'
 import React, { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import { UserState, makeGuess, currentGame, addLetter, removeLetter, setAnimatedLastGuess, done, didWin, createGame } from "./gameReducer"
 import { useAppDispatch } from "./hooks"
+import { IRouterParams } from "./RootComponent"
 
 type IProps = {
     userState: UserState,
@@ -19,6 +21,7 @@ export const Transition = React.forwardRef(function Transition(
 
 export const GameBoard: React.FC<IProps> = (props) => {
     const theme = useTheme()
+    const params = useParams<IRouterParams>()
     const userState = props.userState
     const currGame = currentGame(userState)
     const currGuessIndex = currGame?.previousGuesses.length ?? 0
@@ -154,7 +157,7 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     onClick={() => {
                         setModalOpen(false)
                         setSeenModal(true)
-                        new Promise((resolve) => setTimeout(resolve, 300)).then(() => dispatch(createGame()))
+                        new Promise((resolve) => setTimeout(resolve, 300)).then(() => dispatch(createGame(params.alwaysWord)))
                     }}
                     sx={{
                         marginTop: "10px",

@@ -1,4 +1,9 @@
 import { useMemo } from 'react'
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
 import { createTheme, CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
@@ -28,7 +33,12 @@ function App() {
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <RootComponent />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<RootComponent />} />
+                <Route path="/:alwaysWord" element={<RootComponent />} />
+              </Routes>
+            </BrowserRouter>
           </ThemeProvider>
         </StyledEngineProvider>
       </PersistGate>

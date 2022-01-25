@@ -57,12 +57,7 @@ export const currentGame = (userState: UserState): Game | null => {
 }
 
 const initialState: UserState = {
-    games: [{
-        answer: answerWords[Math.floor(Math.random() * answerWords.length)],
-        currentGuess: '',
-        isCurrentGuessInvalid: false,
-        previousGuesses: [],
-    }],
+    games: [],
     preferences: {
         paletteMode: "dark"
     },
@@ -101,7 +96,7 @@ export const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
-        createGame: (state: WritableDraft<UserState>) => {
+        createGame: (state: WritableDraft<UserState>, action: PayloadAction<string | undefined>) => {
             ReactGA.event('game_created')
             if (!state.games) {
                 state.games = []
@@ -116,8 +111,11 @@ export const gameSlice = createSlice({
                 answerIndex = Math.floor(Math.random() * answers.length)
             }
 
+            const answer = action.payload && answerWordsSet.has(action.payload) ? action.payload : answers[answerIndex]
+            console.log(action.payload, answerWordsSet.has(action.payload ?? ''), answer)
+
             state.games.push({
-                answer: answers[answerIndex],
+                answer: answer,
                 currentGuess: "",
                 isCurrentGuessInvalid: false,
                 previousGuesses: [],

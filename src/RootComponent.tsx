@@ -7,16 +7,23 @@ import { GameBoard } from './GameBoard'
 import { addLetter, createGame, currentGame, done, makeGuess, removeLetter } from './gameReducer'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { StatsDialog } from './StatsDialog';
+import { useParams } from 'react-router-dom';
+
+export type IRouterParams = {
+    alwaysWord?: string
+}
 
 export const RootComponent: React.FC = () => {
     const userState = useAppSelector(state => state.game)
     const keyboard = useRef()
+    const params = useParams<IRouterParams>()
+    console.log(params)
 
     // create game if necessary
     const dispatch = useAppDispatch()
     const currGame = currentGame(userState)
     if (!userState.games || userState.games.length === 0) {
-        dispatch(createGame())
+        dispatch(createGame(params.alwaysWord))
     }
 
     const [showStats, setShowStats] = useState<boolean>(false)
@@ -81,7 +88,7 @@ export const RootComponent: React.FC = () => {
                                 variant="outlined"
                                 size="large"
                                 color="inherit"
-                                onClick={() => dispatch(createGame())}
+                                onClick={() => dispatch(createGame(params.alwaysWord))}
                                 disabled={!currGame || !done(currGame) || userState.animationData.shouldAnimateLastGuess}
                                 sx={{
                                     width: "100%",
