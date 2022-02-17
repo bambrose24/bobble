@@ -178,7 +178,6 @@ export const GameBoard: React.FC<IProps> = (props) => {
                     return <>
                         <Grid item key={`row_col_${guessKey}_${guessLetterKey}`} xs={2} sx={{
                             marginTop: "6px",
-                            marginBottom: "6px",
                             display: "flex",
                             justifyContent: "center",
                         }}>
