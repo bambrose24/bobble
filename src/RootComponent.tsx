@@ -111,7 +111,10 @@ export const RootComponent: React.FC = () => {
                 }}>
                     <Keyboard
                         keyboardRef={r => (keyboard.current = r)}
-                        onKeyPress={(button: string) => {
+                        physicalKeyboardHighlight={true}
+                        physicalKeyboardHighlightPress={true}
+                        physicalKeyboardHighlightBgColor={'gray'}
+                        onKeyReleased={(button: string) => {
                             if (button === '{bksp}') {
                                 dispatch(removeLetter())
                             } else if (button === '{enter}') {
