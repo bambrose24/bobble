@@ -4,7 +4,7 @@ import { text } from './words'
 import { scrabble } from './scrabbleFives'
 import ReactGA from 'react-ga4'
 
-const answerWords = text.split("\n").filter(w => w !== 'goose' && w !== 'ziggy')
+const answerWords = text.filter(w => w !== 'goose' && w !== 'ziggy')
 const answerWordsSet = new Set(answerWords)
 const scrabbleWords = new Set(scrabble.split("\n").filter(w => w !== 'goose' && w !== 'ziggy'))
 
@@ -101,7 +101,7 @@ export const gameSlice = createSlice({
             if (!state.games) {
                 state.games = []
             }
-            const answers = text.split("\n")
+            const answers = text;
             const prevAnswers = new Set<string>();
             state.games.forEach(g => {
                 prevAnswers.add(g.answer)
